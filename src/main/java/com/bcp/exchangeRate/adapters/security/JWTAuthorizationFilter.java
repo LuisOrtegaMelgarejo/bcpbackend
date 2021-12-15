@@ -50,7 +50,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws IOException {
         String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
-        if (token != null) {
+        try {
             String user = Jwts.parser()
                     .setSigningKey(SUPER_SECRET_KEY)
                     .parseClaimsJws(token.replace(TOKEN_BEARER_PREFIX, ""))
@@ -58,9 +58,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .getSubject();
             loggingUseCase.addLogFromRequest(user,request);
             if (user != null) {
+                loggingUseCase.addLogFromRequest(user,request).blockingGet();
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
-            return null;
+        } catch (Exception e) {
+            loggingUseCase.addLogFromRequest("Not_Authorizated",request).blockingGet();
+            throw e;
         }
         return null;
     }
