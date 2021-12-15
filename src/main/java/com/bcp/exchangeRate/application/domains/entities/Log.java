@@ -3,10 +3,7 @@ package com.bcp.exchangeRate.application.domains.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -14,7 +11,8 @@ import javax.persistence.Table;
 @Table(name = "Log")
 public class Log {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column(name = "user", nullable = false)
     String user;
@@ -22,7 +20,7 @@ public class Log {
     String method;
     @Column(name = "resource", nullable = false)
     String resource;
-    @Column(name = "body", nullable = false)
+    @Column(name = "body")
     String body;
     @Column(name = "executed_at")
     String executedAt;

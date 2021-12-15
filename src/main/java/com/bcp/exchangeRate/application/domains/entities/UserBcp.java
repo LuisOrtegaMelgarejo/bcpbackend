@@ -28,7 +28,7 @@ public class UserBcp implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList permissions = new ArrayList<>();
-        permissions.add("SUPERADMIN");
+        permissions.add(new Role());
         return permissions;
     }
 
