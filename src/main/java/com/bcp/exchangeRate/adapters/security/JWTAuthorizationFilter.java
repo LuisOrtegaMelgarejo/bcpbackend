@@ -8,16 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bcp.exchangeRate.application.ports.in.ExchangeUseCase;
 import com.bcp.exchangeRate.application.ports.in.LoggingUseCase;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import static com.bcp.exchangeRate.adapters.security.Constants.*;
@@ -59,7 +56,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             loggingUseCase.addLogFromRequest(user,request);
             if (user != null) {
                 loggingUseCase.addLogFromRequest(user,request).blockingGet();
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(user, null, null);
             }
         } catch (Exception e) {
             loggingUseCase.addLogFromRequest("Not_Authorizated",request).blockingGet();

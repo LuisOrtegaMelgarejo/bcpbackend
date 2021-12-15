@@ -1,6 +1,7 @@
 package com.bcp.exchangeRate.application.domains.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "Log")
 public class Log {
     @Id
@@ -24,9 +26,6 @@ public class Log {
     String body;
     @Column(name = "executed_at")
     String executedAt;
-
-    public Log() {
-    }
 
     public Log(String user, String method, String resource){
         this.user = user;
