@@ -52,6 +52,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setSubject(((User)auth.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
-        response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);
+        response.addHeader(HEADER_ACCESS_CONTROL, HEADER_AUTHORIZATION_KEY);
+        response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + token);
     }
 }

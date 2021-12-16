@@ -35,7 +35,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
             loggingUseCase = webApplicationContext.getBean(LoggingUseCase.class);
         }
-        String header = req.getHeader(HEADER_AUTHORIZACION_KEY);
+        String header = req.getHeader(HEADER_AUTHORIZATION_KEY);
         if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)) {
             chain.doFilter(req, res);
             return;
@@ -46,7 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws IOException {
-        String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
+        String token = request.getHeader(HEADER_AUTHORIZATION_KEY);
         try {
             String user = Jwts.parser()
                     .setSigningKey(SUPER_SECRET_KEY)
